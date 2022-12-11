@@ -37,6 +37,5 @@ export const useSignForm = () => {
     }
   };
 
-  console.log(form);
   return { form, onChangeEmail, onChangePassword, submitSignUp, isValidate };
 };
