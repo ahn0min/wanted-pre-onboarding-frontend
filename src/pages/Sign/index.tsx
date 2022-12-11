@@ -28,7 +28,6 @@ const SignPage = () => {
         </div>
         <div>{isSignIn ? <SignInForm /> : <SignUpForm toggle={toggleIsSignIn} />}</div>
       </>
-      <button onClick={toggleIsSignIn}>ddfd</button>
     </div>
   );
 };
