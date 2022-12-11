@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ISignFormResponse, ITodoDto, ITodoUpdatePayload } from "./type";
 
 let BASEURL = "https://pre-onboarding-selection-task.shop/";
