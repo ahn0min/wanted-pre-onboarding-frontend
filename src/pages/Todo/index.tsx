@@ -5,7 +5,7 @@ import { useNavigates } from "../../hooks/useNavigates";
 import { useTodos } from "../../hooks/useTodos";
 
 const TodoPage = () => {
-  const { todos, value, onChange, onSubmitTodo, updateTodo, deleteTodo } = useTodos();
+  const { todos, value, onChange, submitTodo, updateTodo, deleteTodo } = useTodos();
   const { navigateSign } = useNavigates();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const TodoPage = () => {
     <div style={{ maxWidth: "300px", margin: "0 auto" }}>
       <h1>TodoPage</h1>
       <TodoList todos={todos} updateTodo={updateTodo} deleteTodo={deleteTodo} />
-      <TodoSubmit value={value} onChange={onChange} onSubmitTodo={onSubmitTodo} />
+      <TodoSubmit value={value} onChange={onChange} onSubmitTodo={submitTodo} />
     </div>
   );
 };

@@ -19,7 +19,9 @@ const SignPage = () => {
       <>
         <div>
           {signModes.map((mode) => (
-            <button onClick={() => setMode(mode)}>{mode}</button>
+            <button key={mode} onClick={() => setMode(mode)}>
+              {mode}
+            </button>
           ))}
         </div>
         <div>{mode === signModes[0] ? <SignInForm /> : <SignUpForm />}</div>

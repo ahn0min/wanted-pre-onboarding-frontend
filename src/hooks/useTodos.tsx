@@ -11,7 +11,7 @@ export const useTodos = () => {
       const response = await TodoAPI.get();
       setTodos(response.data);
     } catch (err) {
-      alert("투두 리스트를 불러오지 못했어요.");
+      console.error(err);
     }
   };
 
@@ -23,11 +23,12 @@ export const useTodos = () => {
     setValue(e.target.value);
   };
 
-  const onSubmitTodo = async () => {
+  const submitTodo = async () => {
     try {
       const response = await TodoAPI.create({ todo: value });
       setTodos((pre) => [...pre, response.data]);
       alert("투두리스트 작성에 성공했어요");
+      setValue("");
     } catch (err) {
       alert("투두리스트 작성에 실패했어요");
     }
@@ -35,8 +36,8 @@ export const useTodos = () => {
 
   const updateTodo = async (id: number, payload: ITodoUpdatePayload) => {
     try {
-      const response = await TodoAPI.update(id, payload);
-      return response;
+      await TodoAPI.update(id, payload);
+      getTodos();
     } catch (err) {
       alert("실패");
     }
@@ -44,13 +45,12 @@ export const useTodos = () => {
 
   const deleteTodo = async (id: number) => {
     try {
-      const response = await TodoAPI.delete(id);
+      await TodoAPI.delete(id);
       getTodos();
       alert("삭제 완료");
-      return response;
     } catch (err) {
       alert("삭제가 실패했어요");
     }
   };
-  return { todos, setTodos, value, onChange, onSubmitTodo, getTodos, updateTodo, deleteTodo };
+  return { todos, setTodos, value, onChange, submitTodo, getTodos, updateTodo, deleteTodo };
 };

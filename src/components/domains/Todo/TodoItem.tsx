@@ -1,12 +1,11 @@
-import { AxiosResponse } from "axios";
 import { ChangeEvent, useState } from "react";
 import { ITodoDto, ITodoUpdatePayload } from "../../../api/type";
 import { useBoolean } from "../../../hooks/useBoolean";
 import { Input } from "../../common/Input";
 
 interface TodoItemProps extends ITodoDto {
-  updateTodo?: (id: number, payload: ITodoUpdatePayload) => Promise<AxiosResponse<any, any> | undefined>;
-  deleteTodo?: (id: number) => Promise<AxiosResponse<any, any> | undefined>;
+  updateTodo?: (id: number, payload: ITodoUpdatePayload) => Promise<void>;
+  deleteTodo?: (id: number) => Promise<void>;
 }
 
 export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) => {
@@ -17,22 +16,33 @@ export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) =>
     setValue(e.target.value);
   };
 
-  const updateOnClick = async () => {
+  const updateOnClick = async (value: string, isCompleted?: boolean) => {
     if (value === props.todo) return toggle();
-
-    const response = updateTodo && (await updateTodo(props.id, { todo: value, isCompleted: props.isCompleted }));
-    if (response?.status === 200) {
-      setValue(response?.data.todo);
-    } else {
-      setValue(props.todo);
-    }
-
+    if (updateTodo) await updateTodo(props.id, { todo: value, isCompleted: isCompleted || props.isCompleted });
     toggle();
   };
 
-  const deleteOnClick = async (id: number) => {
-    deleteTodo && (await deleteTodo(id));
+  const updateIsCompletedOnClick = async () => {
+    if (updateTodo) await updateTodo(props.id, { todo: value, isCompleted: !props.isCompleted });
   };
+
+  const deleteOnClick = async (id: number) => {
+    if (deleteTodo) await deleteTodo(id);
+  };
+
+  if (!props.todo)
+    return (
+      <li
+        style={{
+          listStyle: "none",
+          position: "relative",
+          border: "1px solid black",
+          padding: "10px",
+        }}
+      >
+        <span>당신의 투두리스트를 추가해보세요</span>
+      </li>
+    );
 
   return (
     <li
@@ -42,14 +52,10 @@ export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) =>
         padding: "10px",
       }}
     >
-      <span style={{ position: "absolute", left: "10px", cursor: "pointer" }} onClick={updateOnClick}>
+      <span style={{ position: "absolute", left: "10px", cursor: "pointer" }} onClick={updateIsCompletedOnClick}>
         {props.isCompleted ? "달성" : "미달성"}
       </span>
-      {isModify ? (
-        <Input name={"todo"} value={value} onChange={onChange} />
-      ) : (
-        <span>{!props.todo ? "당신의 투두리스트를 추가해보세요!" : value}</span>
-      )}
+      {isModify ? <Input name={"todo"} value={value} onChange={onChange} /> : <span>{value}</span>}
       <span style={{ position: "absolute", right: "10px" }}>
         {!isModify ? (
           <>
@@ -58,7 +64,7 @@ export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) =>
           </>
         ) : (
           <span>
-            <button onClick={updateOnClick}>제출</button>
+            <button onClick={() => updateOnClick(value)}>제출</button>
             <button onClick={toggle}>취소</button>
           </span>
         )}
