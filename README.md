@@ -9,7 +9,7 @@ yarn start
 
 ### 데모 영상
 
-데모영상은 배포링크로 대체하였습니다.
-[배포 링크]()
+데모영상은 배포링크로 대체하였습니다.  
+[배포 링크](https://wanted-pre-onboarding-frontend-jyn4.vercel.app/)
 
 AS4 완료
