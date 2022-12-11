@@ -1,9 +1,11 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { AuthAPI } from "../api";
 import { ISignFormPayload } from "../api/type";
 import { useNavigates } from "./useNavigates";
 
 export const useLogin = (form?: ISignFormPayload) => {
+  const [isLogin, setIsLogin] = useState(() => (localStorage.getItem("token") ? true : false));
+
   const { navigateTodo } = useNavigates();
   const login = async (e: FormEvent<HTMLFormElement>) => {
     if (!form) return;
@@ -18,5 +20,5 @@ export const useLogin = (form?: ISignFormPayload) => {
     }
   };
 
-  return { login };
+  return { isLogin, login };
 };
