@@ -3,13 +3,18 @@ import validate from "../../../../util/validate";
 import { Input } from "../../../common/Input";
 import { Label } from "../../../common/Label";
 import { formNames } from "../../SignIn/Form";
-
+import { FormEvent } from "react";
 import "./style.css";
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ toggle }: { toggle: () => void }) => {
   const { form, onChangePassword, onChangeEmail, submitSignUp, isValidate } = useSignForm();
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    submitSignUp(e);
+    toggle();
+  };
   return (
-    <form className="sign_form" onSubmit={submitSignUp}>
+    <form className="sign_form" onSubmit={onSubmit}>
       <h1>회원가입</h1>
       <div className="flex">
         <Label htmlFor={formNames.email} value="이메일" />

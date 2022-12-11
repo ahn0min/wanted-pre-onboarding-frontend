@@ -13,7 +13,10 @@ export const useSignForm = () => {
     email: "",
     password: "",
   });
+  const [isSignIn, setSignIn] = useState(true);
   const [isValidate, setIsValidate] = useState(true);
+
+  const toggleIsSignIn = () => setSignIn((pre) => !pre);
 
   useEffect(() => {
     if (!form.email || !form.password) return;
@@ -30,12 +33,12 @@ export const useSignForm = () => {
   const submitSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await AuthAPI.signUp(form);
+      await AuthAPI.signUp(form);
       alert("회원가입 성공");
     } catch (err) {
       alert("회원가입 실패");
     }
   };
 
-  return { form, onChangeEmail, onChangePassword, submitSignUp, isValidate };
+  return { form, isSignIn, toggleIsSignIn, onChangeEmail, onChangePassword, submitSignUp, isValidate };
 };
