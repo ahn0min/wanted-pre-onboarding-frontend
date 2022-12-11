@@ -5,6 +5,11 @@ export interface ISignFormPayload {
   password: string;
 }
 
+export interface ITodoUpdatePayload {
+  todo: string;
+  isCompleted: boolean;
+}
+
 export interface ISignFormResponse {
   access_token: string;
 }

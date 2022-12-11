@@ -1,0 +1,11 @@
+.sign_form {
+  width: 350px;
+  border: 1px solid orange;
+  padding: 30px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}

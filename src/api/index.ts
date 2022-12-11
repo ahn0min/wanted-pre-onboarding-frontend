@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { ISignFormResponse, ITodoDto } from "./type";
+import { ISignFormResponse, ITodoDto, ITodoUpdatePayload } from "./type";
 
 let BASEURL = "https://pre-onboarding-selection-task.shop/";
 const api = axios.create({
@@ -30,10 +30,6 @@ export const AuthAPI = {
 export const TodoAPI = {
   create: (payload: { todo: string }): Promise<AxiosResponse<ITodoDto>> => api.post("/todos", payload),
   get: () => api("/todos"),
-  update: (id: string) => {
-    // todo: string
-    // isCompleted: boolean
-    api.put(`/todos/${id}`);
-  },
-  delete: (id: string) => api.delete(`/todos/${id}`),
+  update: (id: number, payload: ITodoUpdatePayload) => api.put(`/todos/${id}`, payload),
+  delete: (id: number) => api.delete(`/todos/${id}`),
 };

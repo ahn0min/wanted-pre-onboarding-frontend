@@ -6,6 +6,7 @@ const signModes = ["로그인", "회원가입"];
 
 const SignPage = () => {
   const [mode, setMode] = useState(signModes[0]);
+
   return (
     <div>
       <div>
