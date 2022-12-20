@@ -30,6 +30,11 @@ export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) =>
     if (deleteTodo) await deleteTodo(id);
   };
 
+  const resetValue = () => {
+    setValue(props.todo);
+    toggle();
+  };
+
   if (!props.todo)
     return (
       <li
@@ -65,7 +70,7 @@ export const TodoItem = ({ updateTodo, deleteTodo, ...props }: TodoItemProps) =>
         ) : (
           <span>
             <button onClick={() => updateOnClick(value)}>제출</button>
-            <button onClick={toggle}>취소</button>
+            <button onClick={resetValue}>취소</button>
           </span>
         )}
       </span>
